@@ -1,8 +1,8 @@
 --SQL file generated using MySQL Workbench for Linux
 SET NAMES utf8;
 
-DROP TABLE IF EXISTS `book`;
-CREATE TABLE `book` (
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE `contacts` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,

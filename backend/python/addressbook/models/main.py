@@ -31,7 +31,7 @@ class BookModel(BaseModel):
 
 	def contacts(self, user_uid):
 		sql = ('SELECT `cid`, `name`, `lastname`, `picture`, `address` '
-			   'FROM `book` '
+			   'FROM `contacts` '
 			   'WHERE `uid` = %s '
 			   'ORDER BY `name` ASC ')
 		return self.db.execute(sql, user_uid)
