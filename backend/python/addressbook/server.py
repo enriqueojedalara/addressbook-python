@@ -7,7 +7,9 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 from addressbook.handlers.main import (
-    MainHandler,
+	UserHandler,
+    BookHandler,
+    NotFoundErrorHandler,
 )
 from addressbook.utils.conf import settings
 
@@ -18,7 +20,9 @@ logger = logging.getLogger(__name__)
 class Server():
 	def start(self):
 		application = tornado.web.Application([
-			(r"/", MainHandler)
+			(r"/api/login", UserHandler),
+			(r"/api/contacts", BookHandler),
+			(r"/(.*)", tornado.web.StaticFileHandler, {"path": settings.front_end_path}),
 		])
 
 		ssl_options = {
@@ -27,7 +31,7 @@ class Server():
 		}
 		server = tornado.httpserver.HTTPServer(application, ssl_options=ssl_options)
 		server.listen(settings.port)
-		logger.error('Server started on port %d' % settings.port)
+		logger.info('Server started on port %d' % settings.port)
 		tornado.ioloop.IOLoop.instance().start()
 
 

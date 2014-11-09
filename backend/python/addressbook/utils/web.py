@@ -42,6 +42,11 @@ class RequestHandler(tornado.web.RequestHandler):
             raise HTTPError(400, 'Parameter in HTTP body is not a valid JSON')
         return params
 
+    def get_access_token(self):
+        if self.request.headers.get('Authorization') is None:
+            raise HTTPError(401, 'Authorization is required')
+        return self.request.headers.get('Authorization')
+
 
 def web_adaptor(f):
     """Decorator that add the HTTP response and set the format to all HTTP responses
@@ -66,7 +71,6 @@ class AccessToken:
 
     @staticmethod
     def create(s):
-        return AccessToken.validate("UZRkiHHhEU5WtQ74qzUDln7nd29BuX82MhbNTF3AwCDMnp4x4iKcNnM52pp/UPH7bdIerVcGsQGIhZWFn9kwxaq2APZ4DSWTFx9PScKxLgQesHqp3O9TRiA9vZbO2ImftjZaGcz+eL+JBob7v/HGqA==")
         s['expire'] = time.time() + AccessToken.DEFAULT_TIME_LIFE
         s = json.dumps(s)
         secret = AES.new(AccessToken.PRIVATE_KEY[:32])
@@ -75,7 +79,7 @@ class AccessToken:
         return {"access_token": access_token}
 
     @staticmethod
-    def validate(s):
+    def validate(s, data = False):
         try:
             secret = AES.new(AccessToken.PRIVATE_KEY[:32])
             decrypted = secret.decrypt(base64.b64decode(s))
@@ -85,4 +89,6 @@ class AccessToken:
             raise HTTPError(401, 'Invalid access token %s' % s)
         if s.get('expire') < time.time():
             raise HTTPError(401, 'Access token has expired')
+        if data:
+            return s
         return True
