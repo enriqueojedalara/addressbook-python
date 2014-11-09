@@ -3,20 +3,27 @@
 
 This script start python/server.py (Here is necesary add the configurations)
 """
+import os
 import argparse
 from addressbook.utils.conf import settings
 from addressbook.server import Server
+
+
+STATIC_PATH = os.path.join(os.getcwd(), 'web')
 
 # App arguments (Configuration)
 p = argparse.ArgumentParser()
 p.add_argument('--port', default=8008, help='Port where server will run')
 p.add_argument('--dbuser', default="root", help='Database user')
-p.add_argument('--dbpass', default="000000", help='Database password')
+p.add_argument('--dbpasswd', default="000000", help='Database password')
 p.add_argument('--dbhost', default="127.0.0.1", help='Database host')
-p.add_argument('--dbname', default="addressbook", help='Database name')
-p.add_argument('--dbport', default="3306", help='Database port')
+p.add_argument('--dbname', default="address_book", help='Database name')
+p.add_argument('--dbport', default=3306, help='Database port')
+p.add_argument('--dbcharset', default="utf8", help='Database charset')
 p.add_argument('--ssl-crt', default="conf/server.crt", type=str, help='SSL Server certificate (Should be in /etc/addressbook)')
 p.add_argument('--ssl-key', default="conf/server.key", type=str, help='SSL Server key (Should be in /etc/addressbook)')
+p.add_argument('--front-end-path', default=STATIC_PATH, type=str, help='Front end static files')
+p.add_argument('--delay-login-failure', default=2, help='Delay when login will be an error (To avoid force brute attacks)')
 
 # Save arguments in singleton of settings
 settings.update(vars(p.parse_args()))
