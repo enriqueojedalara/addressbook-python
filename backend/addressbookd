@@ -1,0 +1,26 @@
+#!/usr/bin/python2.7
+"""Start point to execute the HTTP server for the project
+
+This script start python/server.py (Here is necesary add the configurations)
+"""
+import argparse
+from addressbook.utils.conf import settings
+from addressbook.server import Server
+
+# App arguments (Configuration)
+p = argparse.ArgumentParser()
+p.add_argument('--port', default=8008, help='Port where server will run')
+p.add_argument('--dbuser', default="root", help='Database user')
+p.add_argument('--dbpass', default="000000", help='Database password')
+p.add_argument('--dbhost', default="127.0.0.1", help='Database host')
+p.add_argument('--dbname', default="addressbook", help='Database name')
+p.add_argument('--dbport', default="3306", help='Database port')
+p.add_argument('--ssl-crt', default="conf/server.crt", type=str, help='SSL Server certificate (Should be in /etc/addressbook)')
+p.add_argument('--ssl-key', default="conf/server.key", type=str, help='SSL Server key (Should be in /etc/addressbook)')
+
+# Save arguments in singleton of settings
+settings.update(vars(p.parse_args()))
+
+# Starting server
+server = Server()
+server.start()
