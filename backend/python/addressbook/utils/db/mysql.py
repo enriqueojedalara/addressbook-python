@@ -23,7 +23,7 @@ class Mysql:
 			if kwargs:
 				self.conf = kwargs
 			self.conn = MySQLdb.connect(**self.conf)
-			self.cur = self.conn.cursor()
+			self.cur = self.conn.cursor(MySQLdb.cursors.DictCursor)
 			self.conn.autocommit(True)
 		except MySQLdb.Error as e:
 			error = '%d. %s' % (e.args[0], e.args[1])
@@ -33,7 +33,11 @@ class Mysql:
 	def execute(self, sql, *args, **kwargs):
 		try:
 			self.check()
-			res = self.cur.execute(sql, args)
+			self.cur.execute(sql, args)
+			if sql.lower().lstrip().startswith('select'):
+				res = self.cur.fetchall()
+			elif sql.lower().lstrip().startswith('insert'):
+				res = self.cur.lastrowid
 		except MySQLdb.Error as e:
 			error = '%d. %s' % (e.args[0], e.args[1])
 			logger.error('Error executing query "%s" => %s' % (sql, error))
@@ -42,7 +46,7 @@ class Mysql:
 			logger.error('Error executing query %s' % e)
 			self.conn.close()
 			raise
-		return res.cur
+		return res
 
 	def check(self):
 		try:
