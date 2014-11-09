@@ -1,4 +1,6 @@
 import logging
+import datetime
+
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +26,7 @@ def web_adaptor(f):
     def decorated(self, *args, **kwargs):
         try:
             self.set_header("Content-Type", 'application/json')
+            self.set_header('Date', datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT"))
             kwargs.update(dict((k, values[-1]) for k, values in self.request.arguments.items()))
             return f(self, *args, **kwargs)
         except HTTPError, e:
