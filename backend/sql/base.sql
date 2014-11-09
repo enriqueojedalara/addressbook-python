@@ -1,6 +1,7 @@
 --SQL file generated using MySQL Workbench for Linux
 SET NAMES utf8;
 
+
 DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE `contacts` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,

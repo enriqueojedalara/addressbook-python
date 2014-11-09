@@ -14,6 +14,7 @@ class BaseModel:
 						port=int(settings.dbport),
 						charset=settings.dbcharset)
 
+
 class UserModel(BaseModel):
 	def __init__(self):
 		BaseModel.__init__(self)
