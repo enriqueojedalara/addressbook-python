@@ -10,11 +10,14 @@ app.config(['$routeProvider', function($routeProvider) {
 
 app.run(['$rootScope', function($rootScope) { 
     $rootScope.title = 'Address Book';
+    $rootScope.tweets = 4;
+    $rootScope.TWITTER = 2;
 }]);
 
 app.factory("$auth", function($rootScope, $http, $window) {
     var factory = {
         login: function(){
+            //#TODO This user is hardcoded while the login is implemented
             var data = {
                 'email': 'test@gmail.com',
                 'passwd': 'qwerty',

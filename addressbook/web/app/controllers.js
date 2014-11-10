@@ -1,5 +1,5 @@
-function contacts($scope, $http, $auth, $twitter, $window) {
-    $scope.tweets = 5;
+function contacts($rootScope, $scope, $http, $auth, $twitter, $window) {
+    $scope.tweets = $rootScope.tweets;
     $scope.twitter = {};
     if (!$window.sessionStorage.access_token){
         $auth.login();
@@ -11,7 +11,7 @@ function contacts($scope, $http, $auth, $twitter, $window) {
             $scope.contacts = res.data;
             for(i in $scope.contacts){
                 for(j in $scope.contacts[i].details.sn)
-                    if ($scope.contacts[i].details.sn[j].snid == 2){
+                    if ($scope.contacts[i].details.sn[j].snid == $rootScope.TWITTER){
                         var user = $scope.contacts[i].details.sn[j].username
                         $twitter.tweets(user, $scope.contacts[i].cid).then(function(d) {
                             $scope.twitter[d.cid] = d.tweets;
