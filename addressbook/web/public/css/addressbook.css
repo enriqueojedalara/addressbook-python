@@ -1,0 +1,45 @@
+div.container div.search {
+  margin-bottom: 15px;
+}
+img.picture{
+  width:150px;
+  height:190px;
+  border: 1px solid #ccc;
+  margin: 10px;
+}
+div.name h2,
+div.twitter h2{
+  margin-top: 0px;
+  margin-bottom: 1px;
+}
+div.social div{
+  border: 1px solid #aaa;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  text-align: center;
+  background-color: #eee;
+  margin-right: 5px;
+}
+div.social small{
+  margin-right: 5px;
+}
+
+div.phones{
+  margin-top: 5px;
+}
+
+div.phones i.fa-phone{
+  font-size:16px;
+  margin-right: 5px;
+}
+div.twitter {
+  margin-left: 20px;
+}
+div.twitter .small{
+  font-size: 12px;
+  color: #8899a6;
+}
+div.twitter .text{
+  font-size: 13px;
+}
