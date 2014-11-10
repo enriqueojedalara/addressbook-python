@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export DH_ALWAYS_EXCLUDE=.hg
+
+%:
+	dh $@ --with python2
+
+override_dh_test:
+	python python/setup.py test
+	dh_test
+
+override_dh_auto_install:
+	cd python && python setup.py install --root=$(CURDIR)/debian/python-addressbook --install-layout=deb; fi
+	dh_auto_install
+
+package=$(shell head debian/changelog -n1 | sed -r "s/python-([^ ]+).*/\\1/")
+version=$(shell head debian/changelog -n1 | sed -r "s/.*\(([^\)]+).*/\\1/")
+
+build:
+	$(shell sed -i "s/__version__ *= *'.*'/__version__ = '$(version)'/" python/$(package)/__init__.py)
+	$(shell sed -i "s/Latest Version:.*/Latest Version: $(tag_rev)/" doc/$(package).rst)
+

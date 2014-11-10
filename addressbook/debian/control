@@ -1,0 +1,11 @@
+Source: python-addressbook
+Section: python
+Priority: extra
+Maintainer: Enrique Ojeda Lara <enriqueojedalara@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.9.1
+
+Package: python-addressbook
+Architecture: any
+Depends: ${shlibs:Depends}, ${python:Depends}, python-argparse, pycrypto, python-mysqldb, python-tornado (> 2.3), python-twitter
+Description: Addressbook development
