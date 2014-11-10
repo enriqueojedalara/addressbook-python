@@ -11,6 +11,8 @@ you will know why I choose it)
 
 More info about the project you can read the "REQUIREMENTS" file.
 
+You can see a demo in https://chuque.org:8008/index
+
 
 Configuration
 ================
@@ -39,6 +41,13 @@ tornado over SSL).
 
 Setup
 ---------
+0. Install requirements for python
+
+	- tornado
+	- pycrypto
+	- python-twitter
+	- mysql-python
+
 1. If you will not install de python module it is necesary configure the PYTHONPATH.
 
 E.g
