@@ -32,10 +32,10 @@ INSERT INTO `phones` (`cid`, `phone`, `type`, `modification`, `creation`)
 VALUES ('2', '1236587458', 'WORK', now(), now());
 
 INSERT INTO `contact_sn` (`snid`, `cid`, `username`, `modification`, `creation`)
-VALUES ('2', '1', 'homersimpson', now(), now());
+VALUES ('1', '2', 'homersimpson', now(), now());
 
 INSERT INTO `contact_sn` (`snid`, `cid`, `username`, `modification`, `creation`)
-VALUES ('2', '1', 'homersimpson', now(), now());
+VALUES ('2', '2', 'homersimpson', now(), now());
 
 INSERT INTO `emails` (`cid`, `email`, `type`, `modification`, `creation`)
 VALUES ('2', 'homer@simpson.net', 'PERSONAL', now(), now());
