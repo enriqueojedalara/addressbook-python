@@ -8,6 +8,7 @@ from addressbook.utils.web import (
 from addressbook.controllers.main import (
     UserController,
     BookController,
+    TwitterController,
 )
 from addressbook.utils.conf import settings
 
@@ -27,6 +28,13 @@ class BookHandler(RequestHandler):
     def get(self, *args, **kwargs):
         access_token = self.get_access_token()
         self.finish(BookController().contacts(access_token))
+
+
+class TwitterHandler(RequestHandler):
+    @web_adaptor
+    def get(self, user, *args, **kwargs):
+        access_token = self.get_access_token()
+        self.finish(TwitterController().tweets(user))
 
 
 class NotFoundErrorHandler(RequestHandler):

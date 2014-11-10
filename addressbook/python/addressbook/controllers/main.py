@@ -2,6 +2,7 @@ import logging
 import hashlib
 import time
 import json
+import twitter
 from addressbook.utils.web import HTTPError, AccessToken
 from addressbook.models.main import (
     UserModel,
@@ -70,6 +71,36 @@ class UserController(BaseController):
 			time.sleep(int(settings.delay_login_failure))
 			raise
 		return res
+
+
+class TwitterController(BaseController):
+	def __init__(self, access_token = None):
+		BaseController.__init__(self)
+
+		CONSUMER_KEY = "5pMH96LU41w5UVGWRRw1lBxhv"
+		CONSUMER_SECRET = "WHv0R2O131zgemypt7pD9SpvEb0wHtYSGtMoMfBeVaSpn52iSp"
+		ACCESS_TOKEN = "5772492-tbmYR8aZ7pJ0FcSJevruZwj019tWV6A1DzJ1Ex5OiK"
+		ACCESS_TOKEN_SECRET = "oguHbe8Z5I3g5pjSXgUVeGQPG2XRyQGbOSoI5a2bUvUCI"
+
+		self.api = twitter.Api(consumer_key=CONSUMER_KEY, 
+							   consumer_secret=CONSUMER_SECRET, 
+							   access_token_key=ACCESS_TOKEN, 
+							   access_token_secret=ACCESS_TOKEN_SECRET)
+
+	def tweets(self, user):
+		res =[]
+		tweets = self.api.GetUserTimeline(screen_name=user)
+		for t in tweets:
+			tweet = {}
+			tweet['created_at'] = t.created_at
+			tweet['text'] = t.text
+			tweet['source'] = t.source
+			tweet['profile'] = {
+				'image': t.user.profile_image_url,
+				'screen_name': t.user.screen_name
+			}
+			res.append(tweet)
+		return json.dumps(res)
 
 
 class BookController(BaseController):

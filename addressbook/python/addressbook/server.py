@@ -9,6 +9,7 @@ import tornado.web
 from addressbook.handlers.main import (
 	UserHandler,
     BookHandler,
+    TwitterHandler,
     NotFoundErrorHandler,
 )
 from addressbook.utils.conf import settings
@@ -22,6 +23,7 @@ class Server():
 		application = tornado.web.Application([
 			(r"/api/login", UserHandler),
 			(r"/api/contacts", BookHandler),
+			(r"/api/tweets/(.*)", TwitterHandler),
 			(r"/(.*)", tornado.web.StaticFileHandler, {"path": settings.front_end_path}),
 		])
 
