@@ -1,6 +1,17 @@
 --SQL file generated using MySQL Workbench for Linux
 SET NAMES utf8;
 
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `uid` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `mobile` varchar(16) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `modification` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `creation` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE `contacts` (
@@ -18,6 +29,19 @@ CREATE TABLE `contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `social_networks`;
+CREATE TABLE `social_networks` (
+  `id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `url` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `social_networks` (`id`, `name`, `url`) VALUES
+(1, 'Facebook', 'http://www.facebook.com'),
+(2, 'Twitter',  'http://www.twitter.com'),
+(3, 'Instagram',  'http://www.instagram.com');
+
 DROP TABLE IF EXISTS `contact_sn`;
 CREATE TABLE `contact_sn` (
   `snid` int(11) NOT NULL,
@@ -28,7 +52,7 @@ CREATE TABLE `contact_sn` (
   KEY `fk_social_networks_has_book_book1_idx` (`cid`),
   KEY `fk_social_networks_has_book_social_networks1_idx` (`snid`),
   CONSTRAINT `fk_social_networks_has_book_social_networks1` FOREIGN KEY (`snid`) REFERENCES `social_networks` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_social_networks_has_book_book1` FOREIGN KEY (`cid`) REFERENCES `book` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_social_networks_has_book_book1` FOREIGN KEY (`cid`) REFERENCES `contacts` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -42,7 +66,7 @@ CREATE TABLE `custom_fields` (
   `creation` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_custom_fields_book1_idx` (`cid`),
-  CONSTRAINT `fk_custom_fields_book1` FOREIGN KEY (`cid`) REFERENCES `book` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_custom_fields_book1` FOREIGN KEY (`cid`) REFERENCES `contacts` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -71,7 +95,7 @@ CREATE TABLE `emails` (
   UNIQUE KEY `index4` (`cid`,`email`),
   KEY `fk_table1_book_idx` (`cid`),
   KEY `index3` (`email`),
-  CONSTRAINT `fk_table1_book` FOREIGN KEY (`cid`) REFERENCES `book` (`cid`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_table1_book` FOREIGN KEY (`cid`) REFERENCES `contacts` (`cid`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -100,31 +124,10 @@ CREATE TABLE `phones` (
   `creation` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_table1_book1_idx` (`cid`),
-  CONSTRAINT `fk_table1_book1` FOREIGN KEY (`cid`) REFERENCES `book` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_table1_book1` FOREIGN KEY (`cid`) REFERENCES `contacts` (`cid`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `social_networks`;
-CREATE TABLE `social_networks` (
-  `id` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL,
-  `url` varchar(128) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `social_networks` (`id`, `name`, `url`) VALUES
-(1,	'Facebook',	'http://www.facebook.com'),
-(2,	'Twitter',	'http://www.twitter.com'),
-(3,	'Instagram',	'http://www.instagram.com');
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `uid` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL,
-  `mobile` varchar(16) NOT NULL,
-  `email` varchar(64) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `modification` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `creation` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
